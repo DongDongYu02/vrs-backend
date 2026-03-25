@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: nexus-admin
+  profiles:
+    active: @profile.active@
