@@ -12,8 +12,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import java.net.InetAddress;
 
 @Slf4j
-@SpringBootApplication(scanBasePackages = {"cn.dong.nexus", "cn.dong.coade"})
-@MapperScan({"cn.dong.nexus.modules.*.mapper", "cn.dong.coade.modules.*.mapper"})
+@SpringBootApplication(scanBasePackages = {"cn.dong.nexus"})
+@MapperScan({"cn.dong.nexus.modules.*.mapper"})
 @EnableScheduling
 public class NexusApplication {
     @SneakyThrows
@@ -35,7 +35,6 @@ public class NexusApplication {
                 env.getProperty("server.port"),
                 env.getProperty("server.port"),
                 env.getProperty("server.servlet.context-path") == null ? "" : env.getProperty("server.servlet.context-path"));
-
 
     }
 }

@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class UploadUtil {
     public static String UPLOAD_DIR;
 
-    @Value("${nexus.file-upload-path}")
+    @Value("${app.file-upload-path}")
     public void setter(String baseDir) {
         UPLOAD_DIR = baseDir;
     }

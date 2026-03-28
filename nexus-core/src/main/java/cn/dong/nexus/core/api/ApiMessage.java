@@ -9,7 +9,7 @@ public enum ApiMessage {
     ERROR(false, "操作失败！", 500),
     SUCCESS(true, "操作成功！", 200),
     INTERNAL_ERROR(false, "系统异常，请稍后再试！", 500),
-    NOT_FOUND(false, "资源未找到！", 404),
+    NOT_FOUND(false, "数据未找到或已被删除！", 404),
     USER_NOT_FOUND(false, "用户未找到！", 404),
 
     UNAUTHORIZED(false, "用户未授权！", 401),

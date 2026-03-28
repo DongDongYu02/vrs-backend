@@ -104,45 +104,16 @@ public interface GlobalConstants {
         Integer SPECIAL = 3;
     }
 
-    interface EkpLeaveType {
-        /**
-         * 假勤类型 请假
-         */
-        Integer LEAVE = 5;
-
-        /**
-         * 假勤类型 外出
-         */
-        Integer OUTGOING = 7;
-
-        /**
-         * 假勤类型 出差
-         */
-        Integer BIZ_TRIP = 4;
-    }
-
     interface CacheKey {
         String EKP_PROVIDE_TOKEN = "ekp_provide_token:";
+
+        String WX_ACCESS_TOKEN = "wx_access_token";
+
+        String VRS_SHARE_INFO_PREFIX = "vrs_share_info:";
     }
 
-    interface AttendReissueApprovalResult {
-
-        /**
-         * 1-审批通过
-         */
-        Integer APPROVED = 1;
-
-        /**
-         * 2-审批驳回
-         */
-        Integer REJECTED = 2;
-    }
 
     interface TableName {
-        String CMT_6S_REVIEW = "cmt_6s_review";
-        String CMT_DEPT = "cmt_department";
-        String CMT_USER = "cmt_user";
-        String CMT_PERMISSION = "cmt_permission";
         String SYS_DATA_DICT_ITEM = "sys_data_dict_item";
     }
 }

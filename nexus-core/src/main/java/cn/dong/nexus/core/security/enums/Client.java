@@ -14,9 +14,9 @@ public enum Client {
      */
     APP("app"),
     /**
-     * CMT (企业微信)
+     * VRS 访客预约系统
      */
-    CMT("cmt");
+    VRS("VRS");
 
     private final String code;
 

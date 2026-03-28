@@ -17,7 +17,6 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,10 +31,12 @@ public class GlobalExceptionHandler {
     private static final String VALID_MUST_NOT_BLANK = "不能为空";
 
     private static final String VALID_CONVERT_ERROR = "格式错误";
+
     @PostConstruct
     public void init() {
         log.info("SaTokenExceptionHandler loaded");
     }
+
     /**
      * 业务异常处理
      **/
@@ -72,8 +73,6 @@ public class GlobalExceptionHandler {
 
         return "Content-Type not supported";
     }
-
-
 
 
     /**
@@ -120,11 +119,6 @@ public class GlobalExceptionHandler {
         return Result.error(e.getMessage());
     }
 
-    @ExceptionHandler(NoResourceFoundException.class)
-    public Result<Void> handleAllException(Exception e) {
-        log.error(e.getMessage());
-        return Result.error(ApiMessage.NOT_FOUND);
-    }
 
 
     /**

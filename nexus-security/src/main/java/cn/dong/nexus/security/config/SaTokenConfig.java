@@ -53,10 +53,9 @@ public class SaTokenConfig implements WebMvcConfigurer {
                 "/sys/auth/login",
                 "/sys/auth/logout",
                 "/sys/config/setting",
-                "/cmt/auth/checkLogin",
-                "/cmt/auth/wecom-login",
-                "/cmt/auth/provide/ekp/accessToken",
-                "/cmt/attend/reissue-apply/callback"
+                "/vrs/auth/login",
+                "/vrs/auth/provide/ekp/accessToken",
+                "/vrs/booking/update-status"
                 );
     }
 

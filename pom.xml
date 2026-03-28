@@ -27,6 +27,7 @@
         <swagger-annotations.version>2.2.41</swagger-annotations.version>
         <caffeine.version>3.2.3</caffeine.version>
         <langchain4j-open-ai.version>1.12.1-beta21</langchain4j-open-ai.version>
+        <zxing.version>3.5.1</zxing.version>
     </properties>
 
     <modules>
@@ -37,7 +38,7 @@
         <module>nexus-boot</module>
         <module>nexus-security</module>
         <module>nexus-module-system</module>
-        <module>coade-module-cmt</module>
+        <module>biz-module-vrs</module>
     </modules>
 
     <dependencyManagement>
@@ -104,6 +105,12 @@
                 <groupId>dev.langchain4j</groupId>
                 <artifactId>langchain4j-open-ai-spring-boot-starter</artifactId>
                 <version>${langchain4j-open-ai.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${zxing.version}</version>
             </dependency>
 
 
