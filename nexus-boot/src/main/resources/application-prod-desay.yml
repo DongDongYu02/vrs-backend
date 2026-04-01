@@ -4,33 +4,39 @@ app:
   file-upload-path: D:/upload/
   aes-key: 1RR1JeyfUWvy1gmZFoO439Tk43dPdI92C1hZ6Tr2wFo=
   vrs:
-    app-id: wx1d42749a3c5ffc1a
-    app-secret: f407bf39fb88fb7772f6c8e475b2df40
-    wxapp-msg-template-id: Zkft4dkAvJsQTfUoDbkcdqXj2uv80lUx4DBHuhk-69I
+    app-id: wx3cab454774d6aa14
+    app-secret: 894513ebded90ab26f866f815884d163
+    wxapp-msg-template-id: FqI8k4M13R7_ZBsEfDtuZztNSmEJLG-oSKE-3HVHoqo
   ekp:
-    server-url: http://10.0.10.30:9081
-    vrs-review-template-id: 19afc51be2886d34c5da13e46ea8b977
+    server-url: http://192.168.0.21:9091
+    vrs-review-template-id: 19d4717c23609b12198148b44f2ba5d8
     vrs-trial-position-template-id: 19d419d03884ae7f25de44d49bd9274b
     review:
       booking-field:
         # 被访单位
-        interviewee: fd_3eb701f7efa0f8
+        interviewee: fd_3f0fae22a075cc
         # 接待区域
-        reception-area: fd_3eb7020398c5c4
+        reception-area: fd_3f0fae2e57cdcc
         # 接待部门
-        reception-dept: fd_3eb7020d462c06
+        reception-dept: fd_3f0fae94adf5ac
         # 接待人
-        receptionist-name: fd_3eb702434791f6
+        receptionist-name: fd_3f0faeb0675086
         # 接待人联系方式
-        receptionist-contact: fd_3eb702683c9f64
+        receptionist-contact: fd_3f0faebc6139dc
         # 来访人姓名
-        visitor-name: fd_3eb7027c43ad7a
+        visitor-name: fd_3f0fae3b35106a
         # 来访人联系方式
-        visitor-contact: fd_3eb702ac0b1fc6
+        visitor-contact: fd_3f0fae8ab2e4d0
+        # 来访单位
+        visitor-company: fd_3f0fae8c4878c0
         # 来访时间
-        visiting-time: fd_3eb702c2168aac
+        visiting-time: fd_3f0faeea9b6b46
+        # 实际来访时间
+        actual-visit-time: fd_3f0faeec62ae46
         # 来访事由
-        visiting-reason: fd_3ceda385caa300
+        visiting-reason: fd_3e11d11e3ed276
+        # 登录名
+        login-name: fd_3f0fae111bd0b6
 spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -45,18 +51,18 @@ spring:
         local-mysql:
           url: jdbc:mysql://127.0.0.1:3306/vrs?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
           username: root
-          password: root
+          password: hBhVF2dNPNfWFJyCk7uk
           driver-class-name: com.mysql.cj.jdbc.Driver
         ekp-sqlserver:
-          url: jdbc:sqlserver://10.0.10.210:1433;DatabaseName=ekp;encrypt=false;trustServerCertificate=true;useSSL=false
-          username: sa
-          password: win*Coade#..
+          url: jdbc:sqlserver://192.168.0.22:1433;DatabaseName=ekp;encrypt=false;trustServerCertificate=true;useSSL=false
+          username: ekp
+          password: HC@123456
           driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   data:
     redis:
       host: localhost
       port: 6379
-      database: 0
+      database: 1
       timeout: 10s
       lettuce:
         pool:
@@ -73,7 +79,7 @@ mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       id-type: ASSIGN_ID

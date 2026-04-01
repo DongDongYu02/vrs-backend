@@ -24,26 +24,18 @@ import cn.dong.nexus.modules.vrs.service.EkpCommonService;
 import cn.dong.nexus.modules.vrs.service.IVrsBookingCodeService;
 import cn.dong.nexus.modules.vrs.service.IVrsBookingService;
 import cn.dong.nexus.modules.vrs.service.WechatService;
+import cn.dong.nexus.modules.vrs.util.VrsQrCodeUtil;
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.extra.qrcode.QrCodeUtil;
-import cn.hutool.extra.qrcode.QrConfig;
 import cn.hutool.json.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -136,7 +128,7 @@ public class VrsBookingServiceImpl extends ServiceImpl<VrsBookingMapper, VrsBook
             // 审批驳回
             case VrsConstants.VrsBookingStatus.REJECTED -> {
                 // 删除 EKP流程
-                ekpCommonService.abandonBookingEkpReview(vrsBooking.getEkpReviewId());
+                ekpCommonService.abandonEkpReview(vrsBooking.getEkpReviewId());
                 // 通知访客
                 vrsBooking.setStatus(VrsConstants.VrsBookingStatus.REJECTED);
                 wechatService.sendBooingStatusMessage(vrsBooking);
@@ -144,7 +136,7 @@ public class VrsBookingServiceImpl extends ServiceImpl<VrsBookingMapper, VrsBook
             // 取消预约
             case VrsConstants.VrsBookingStatus.CANCELED -> {
                 // 删除 EKP流程
-                ekpCommonService.abandonBookingEkpReview(vrsBooking.getEkpReviewId());
+                ekpCommonService.abandonEkpReview(vrsBooking.getEkpReviewId());
             }
         }
 
@@ -267,30 +259,12 @@ public class VrsBookingServiceImpl extends ServiceImpl<VrsBookingMapper, VrsBook
     }
 
     private void generateVrsBookingCode(String id) {
-        String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        String dir = appProperties.getFileUploadPath() + today;
-        FileUtil.mkdir(dir);
+        String codePath = VrsQrCodeUtil.generate(id);
+        VrsBookingCode vrsBookingCode = new VrsBookingCode();
+        vrsBookingCode.setVrsBookingId(id);
+        vrsBookingCode.setUrl(codePath);
+        vrsBookingCodeService.save(vrsBookingCode);
 
-        String fileName = SecureUtil.md5(id) + ".png";
-        String path = dir + "/" + fileName;
-        try {
-            File tempFile = File.createTempFile("logoTemp", ".png");
-            ClassPathResource resource =
-                    new ClassPathResource("static/kede-logo.png");
-            FileCopyUtils.copy(resource.getInputStream(),
-                    new FileOutputStream(tempFile));
-            QrConfig qrConfig = QrConfig.create().setImg(tempFile)
-                    .setHeight(500)
-                    .setWidth(500);
-            QrCodeUtil.generate(id, qrConfig, FileUtil.file(path));
-            String codePath = today + "/" + fileName;
-            VrsBookingCode vrsBookingCode = new VrsBookingCode();
-            vrsBookingCode.setVrsBookingId(id);
-            vrsBookingCode.setUrl(codePath);
-            vrsBookingCodeService.save(vrsBookingCode);
-        } catch (Exception e) {
-            log.error("访客码生成失败：{}", e.getMessage());
-        }
     }
 
 

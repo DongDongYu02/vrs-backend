@@ -18,6 +18,31 @@ public class AppProperties {
     public static class Ekp {
         private String serverUrl;
         private String vrsReviewTemplateId;
+        private String vrsTrialPositionTemplateId;
+        private Review review;
+
+        @Data
+        public static class Review {
+
+            private BookingField bookingField;
+
+            @Data
+            public static class BookingField {
+                private String interviewee;
+                private String visitorName;
+                private String visitorContact;
+                private String visitorCompany;
+                private String receptionArea;
+                private String receptionDept;
+                private String receptionistName;
+                private String receptionistContact;
+                private String visitingTime;
+                private String visitingReason;
+                private String loginName;
+                private String actualVisitTime;
+            }
+
+        }
     }
 
     @Data
@@ -26,4 +51,6 @@ public class AppProperties {
         private String appSecret;
         private String wxappMsgTemplateId;
     }
+
+
 }

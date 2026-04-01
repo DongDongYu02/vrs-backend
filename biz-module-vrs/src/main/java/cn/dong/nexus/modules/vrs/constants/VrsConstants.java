@@ -27,4 +27,16 @@ public interface VrsConstants {
         int NORMAL = 1;
         int EXPIRED = 2;
     }
+
+    interface TRIAL_POSITION_STATUS {
+        int PENDING = 0;
+        int APPROVED = 1;
+        int REJECTED = 2;
+        int CANCELED = 3;
+    }
+
+    interface QrCodeType {
+        int BOOKING = 1;
+        int TRIAL_POSITION = 2;
+    }
 }

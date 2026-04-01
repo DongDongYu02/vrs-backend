@@ -2,6 +2,8 @@ package cn.dong.nexus.common.constants;
 
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 
+import java.time.format.DateTimeFormatter;
+
 public interface GlobalConstants {
     Integer INT_ZERO = 0;
 
@@ -22,6 +24,12 @@ public interface GlobalConstants {
 
         String Y_M_D_H_M = "yyyy-MM-dd HH:mm";
 
+    }
+
+    interface DateFormat {
+        DateTimeFormatter NORMAL_ONLY_DATE = DateTimeFormatter.ofPattern(DatePattern.NORMAL_ONLY_DATE);
+        DateTimeFormatter NORMAL = DateTimeFormatter.ofPattern(DatePattern.NORMAL);
+        DateTimeFormatter Y_M_D_H_M = DateTimeFormatter.ofPattern(DatePattern.Y_M_D_H_M);
     }
 
     /**

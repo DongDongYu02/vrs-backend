@@ -84,6 +84,13 @@
                 <profile.active>prod</profile.active>
             </properties>
         </profile>
+
+        <profile>
+            <id>prod-desay</id>
+            <properties>
+                <profile.active>prod-desay</profile.active>
+            </properties>
+        </profile>
     </profiles>
     
 </project>
