@@ -103,12 +103,13 @@ public class VrsAuthServiceImpl implements IVrsAuthService {
         String url = StrUtil.format(ApiConstants.Wx.GET_USER_PHONE_NUMBER + "?access_token={}", accessToken);
         JSONObject body = new JSONObject();
         body.set("code", code);
+        String resp = null;
         try {
-            String resp = HttpUtil.post(url, JSONUtil.toJsonStr(body));
+            resp = HttpUtil.post(url, JSONUtil.toJsonStr(body));
             JSONObject json = JSONUtil.parseObj(resp);
             return json.getJSONObject("phone_info").getStr("purePhoneNumber");
         } catch (Exception e) {
-            log.error("获取微信用户手机号失败：{}", e.getMessage());
+            log.error("获取微信用户手机号失败：{}，resp:{}", e.getMessage(), resp);
             throw new BizException("授权登录失败，请稍后重试！");
         }
     }
