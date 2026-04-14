@@ -1,9 +1,11 @@
 package cn.dong.nexus.modules.vrs.controller.manage;
 
 import cn.dong.nexus.common.constants.GlobalConstants;
+import cn.dong.nexus.core.api.ApiMessage;
 import cn.dong.nexus.core.api.Result;
 import cn.dong.nexus.infra.util.RedisUtil;
 import cn.dong.nexus.modules.vrs.domain.dto.VrsUpdateBookingStatusDTO;
+import cn.dong.nexus.modules.vrs.domain.entity.VrsBooking;
 import cn.dong.nexus.modules.vrs.service.IVrsBookingService;
 import cn.hutool.json.JSONUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +35,12 @@ public class VrsBookingController {
             return Result.error("ekp callback accessToken is invalid!");
         }
         VrsUpdateBookingStatusDTO dto = JSONUtil.toBean(body, VrsUpdateBookingStatusDTO.class);
-        vrsBookingService.updateStatus(dto);
+        VrsBooking vrsBooking = vrsBookingService.lambdaQuery().eq(VrsBooking::getEkpReviewId, dto.getId()).one();
+        if (Objects.isNull(vrsBooking)) {
+            return Result.error(ApiMessage.NOT_FOUND);
+        }
+        vrsBooking.setStatus(dto.getStatus());
+        vrsBookingService.updateStatus(vrsBooking);
         return Result.success();
     }
 

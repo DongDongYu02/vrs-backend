@@ -11,7 +11,6 @@ import cn.dong.nexus.infra.util.RedisUtil;
 import cn.dong.nexus.modules.vrs.constants.VrsConstants;
 import cn.dong.nexus.modules.vrs.domain.bo.VrsLoginUser;
 import cn.dong.nexus.modules.vrs.domain.dto.VrsBookingDTO;
-import cn.dong.nexus.modules.vrs.domain.dto.VrsUpdateBookingStatusDTO;
 import cn.dong.nexus.modules.vrs.domain.entity.VrsBooking;
 import cn.dong.nexus.modules.vrs.domain.entity.VrsBookingCode;
 import cn.dong.nexus.modules.vrs.domain.query.VrsBookingQuery;
@@ -43,7 +42,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class VrsBookingServiceImpl extends ServiceImpl<VrsBookingMapper, VrsBooking> implements IVrsBookingService {
+public class VrsBookingServiceImpl extends ServiceImpl<VrsBookingMapper, cn.dong.nexus.modules.vrs.domain.entity.VrsBooking> implements IVrsBookingService {
     private final IAuthContext authContext;
     private final EkpCommonService ekpCommonService;
     private final AppProperties appProperties;
@@ -107,40 +106,33 @@ public class VrsBookingServiceImpl extends ServiceImpl<VrsBookingMapper, VrsBook
 
     @Override
     @DSTransactional(rollbackFor = Exception.class)
-    public void updateStatus(VrsUpdateBookingStatusDTO dto) {
-        VrsBooking vrsBooking = this.lambdaQuery().eq(VrsBooking::getId, dto.getId()).one();
-        if (Objects.isNull(vrsBooking)) {
-            throw new BizException("访客预约记录不存在！");
-        }
+    public void updateStatus(VrsBooking booking) {
         // 更新状态
-        this.lambdaUpdate().eq(VrsBooking::getId, vrsBooking.getId())
-                .set(VrsBooking::getStatus, dto.getStatus())
+        this.lambdaUpdate().eq(VrsBooking::getId, booking.getId())
+                .set(VrsBooking::getStatus, booking.getStatus())
                 .update();
-        switch (dto.getStatus()) {
+        switch (booking.getStatus()) {
             // 审批通过
             case VrsConstants.VrsBookingStatus.APPROVED -> {
                 // 生成访客码
-                this.generateVrsBookingCode(vrsBooking.getId());
-                // TODO 通知访客
-                vrsBooking.setStatus(VrsConstants.VrsBookingStatus.APPROVED);
-                wechatService.sendBooingStatusMessage(vrsBooking);
+                this.generateVrsBookingCode(booking.getId());
+                booking.setStatus(VrsConstants.VrsBookingStatus.APPROVED);
+                wechatService.sendBooingStatusMessage(booking);
             }
             // 审批驳回
             case VrsConstants.VrsBookingStatus.REJECTED -> {
                 // 删除 EKP流程
-                ekpCommonService.abandonEkpReview(vrsBooking.getEkpReviewId());
+                ekpCommonService.abandonEkpReview(booking.getEkpReviewId());
                 // 通知访客
-                vrsBooking.setStatus(VrsConstants.VrsBookingStatus.REJECTED);
-                wechatService.sendBooingStatusMessage(vrsBooking);
+                booking.setStatus(VrsConstants.VrsBookingStatus.REJECTED);
+                wechatService.sendBooingStatusMessage(booking);
             }
             // 取消预约
             case VrsConstants.VrsBookingStatus.CANCELED -> {
                 // 删除 EKP流程
-                ekpCommonService.abandonEkpReview(vrsBooking.getEkpReviewId());
+                ekpCommonService.abandonEkpReview(booking.getEkpReviewId());
             }
         }
-
-
     }
 
     @Override

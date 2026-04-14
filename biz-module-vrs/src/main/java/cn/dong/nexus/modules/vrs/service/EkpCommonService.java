@@ -91,7 +91,7 @@ public class EkpCommonService {
         JSONObject content = new JSONObject();
         AppProperties.Ekp.Review.BookingField bookingField = appProperties.getEkp().getReview().getBookingField();
         // 被访单位
-        content.set(bookingField.getInterviewee(), "德赛集团有限公司");
+        content.set(bookingField.getInterviewee(), "浙江可得电子科技有限公司");
         // 接待区域
         content.set(bookingField.getReceptionArea(), dto.getReceptionArea());
         // 接待部门
@@ -105,7 +105,7 @@ public class EkpCommonService {
         // 来访人联系方式
         content.set(bookingField.getVisitorContact(), dto.getVisitorContact());
         // 来访单位
-        content.set(bookingField.getVisitorContact(), dto.getVisitorCompany());
+        content.set(bookingField.getVisitorCompany(), dto.getVisitorCompany());
         // 来访时间
         content.set(bookingField.getVisitingTime(), dto.getVisitingTime().format(GlobalConstants.DateFormat.Y_M_D_H_M));
         // 来访事由

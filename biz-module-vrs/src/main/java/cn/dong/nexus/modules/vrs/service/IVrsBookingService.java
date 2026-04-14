@@ -1,7 +1,6 @@
 package cn.dong.nexus.modules.vrs.service;
 
 import cn.dong.nexus.modules.vrs.domain.dto.VrsBookingDTO;
-import cn.dong.nexus.modules.vrs.domain.dto.VrsUpdateBookingStatusDTO;
 import cn.dong.nexus.modules.vrs.domain.entity.VrsBooking;
 import cn.dong.nexus.modules.vrs.domain.query.VrsBookingQuery;
 import cn.dong.nexus.modules.vrs.domain.vo.VrsBookingCodeDetailVO;
@@ -13,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
-public interface IVrsBookingService extends IService<VrsBooking> {
+public interface IVrsBookingService extends IService<cn.dong.nexus.modules.vrs.domain.entity.VrsBooking> {
     /**
      * 创建邀请信息
      */
@@ -42,7 +41,7 @@ public interface IVrsBookingService extends IService<VrsBooking> {
     /**
      * 更新预约状态
      */
-    void updateStatus(VrsUpdateBookingStatusDTO dto);
+    void updateStatus(VrsBooking dto);
 
     /**
      * 获取访客码

@@ -4,6 +4,7 @@ import cn.dong.nexus.core.api.ApiMessage;
 import cn.dong.nexus.core.api.Result;
 import cn.dong.nexus.modules.vrs.domain.dto.VrsBookingDTO;
 import cn.dong.nexus.modules.vrs.domain.dto.VrsUpdateBookingStatusDTO;
+import cn.dong.nexus.modules.vrs.domain.entity.VrsBooking;
 import cn.dong.nexus.modules.vrs.domain.query.VrsBookingQuery;
 import cn.dong.nexus.modules.vrs.domain.vo.VrsBookingCodeDetailVO;
 import cn.dong.nexus.modules.vrs.domain.vo.VrsBookingCodeVO;
@@ -19,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController("VrsBookingController_App")
 @RequestMapping("/vrs/wxapp/booking")
@@ -72,7 +74,12 @@ public class VrsBookingController {
     @PostMapping("/update-status")
     @Operation(summary = "更新预约状态")
     public Result<Void> updateStatus(@RequestBody @Validated VrsUpdateBookingStatusDTO dto) {
-        vrsBookingService.updateStatus(dto);
+        VrsBooking vrsBooking = vrsBookingService.lambdaQuery().eq(VrsBooking::getId, dto.getId()).one();
+        if (Objects.isNull(vrsBooking)) {
+            return Result.error(ApiMessage.NOT_FOUND);
+        }
+        vrsBooking.setStatus(dto.getStatus());
+        vrsBookingService.updateStatus(vrsBooking);
         return Result.success();
     }
 

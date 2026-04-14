@@ -31,6 +31,8 @@ app:
         visiting-time: fd_3eb702c2168aac
         # 来访事由
         visiting-reason: fd_3ceda385caa300
+        # 登录名
+        login-name: fd_3f0bb3c94d2948
 spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss

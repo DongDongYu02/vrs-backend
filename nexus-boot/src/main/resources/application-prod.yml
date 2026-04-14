@@ -10,6 +10,29 @@ app:
   ekp:
     server-url: http://10.0.10.30:9081
     vrs-review-template-id: 19afc51be2886d34c5da13e46ea8b977
+    vrs-trial-position-template-id: 19d419d03884ae7f25de44d49bd9274b
+    review:
+      booking-field:
+        # 被访单位
+        interviewee: fd_3eb701f7efa0f8
+        # 接待区域
+        reception-area: fd_3eb7020398c5c4
+        # 接待部门
+        reception-dept: fd_3eb7020d462c06
+        # 接待人
+        receptionist-name: fd_3eb702434791f6
+        # 接待人联系方式
+        receptionist-contact: fd_3eb702683c9f64
+        # 来访人姓名
+        visitor-name: fd_3eb7027c43ad7a
+        # 来访人联系方式
+        visitor-contact: fd_3eb702ac0b1fc6
+        # 来访时间
+        visiting-time: fd_3eb702c2168aac
+        # 来访事由
+        visiting-reason: fd_3ceda385caa300
+        # 登录名
+        login-name: fd_3f0bb3c94d2948
 spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -35,7 +58,7 @@ spring:
     redis:
       host: localhost
       port: 6379
-      database: 0
+      database: 1
       timeout: 10s
       lettuce:
         pool:
